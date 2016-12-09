@@ -1,0 +1,96 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4">
+            <img class="img-responsive" src="{{ base_url() }}/uploads/{{ auth.user.profilePicture }}" alt="Profile Image" width="100%" height="100%"/>
+            <button class="btn" data-toggle="modal" data-target="#{{ auth.user.name }}"><span class="glyphicon glyphicon-eye-open"></span></button>
+            <button class="btn" data-toggle="modal" data-target="#update"><span class="glyphicon glyphicon-cog"></span></button>
+            <a href="{{ path_for('profile.users') }}" class="btn" role="button"><span class="glyphicon glyphicon-send"></span></a>
+        </div>
+        <div class="modal fade" id="{{ auth.user.name }}" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4><span class="glyphicon glyphicon-user"></span> BIO</h4>
+              </div>
+              <div class="modal-body">
+                <div class="well well-sm">
+                  <p>Username: {{ auth.user.name }}</p>
+                  <p>First Name: {{ auth.user.first_name }}</p>
+                  <p>Last Name: {{ auth.user.last_name }}</p>
+                  <p>E-mail Address: {{ auth.user.email }}</p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="update" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4><span class="glyphicon glyphicon-user"></span> Update BIO</h4>
+              </div>
+              <div class="modal-body">
+                <p>Change Profile Picture</p>
+                <div class="well well-sm">
+                  <form method="POST" action="{{ path_for('profile.bio.change') }}" enctype="multipart/form-data">
+                    <div class="form-group{{ errors.email ? ' has-error' : ''}}">
+                      <label for="email">Email</label>
+                      <input type="email" name="email" id="email" placeholder="you@domain.com" class="form-control" value="{{ auth.user.email }}">
+                      {% if errors.email %}
+                        <span class="help-block">{{ errors.email | first }}</span>
+                      {% endif %}
+                    </div>
+                    <div class="form-group{{ errors.name ? ' has-error' : ''}}">
+                      <label for="name">Handle</label>
+                      <input type="text" name="name" id="name" class="form-control" value="{{ auth.user.name }}">
+                      {% if errors.name %}
+                        <span class="help-block">{{ errors.name | first }}</span>
+                      {% endif %}
+                    </div>
+                    <div class="form-group{{ errors.firstname ? ' has-error' : ''}}">
+                      <label for="firstname">Name</label>
+                      <input type="text" name="firstname" id="firstname" class="form-control" value="{{ auth.user.first_name }}">
+                      {% if errors.firstname %}
+                        <span class="help-block">{{ errors.firstname | first }}</span>
+                      {% endif %}
+                    </div>
+                    <div class="form-group{{ errors.lastname ? ' has-error' : ''}}">
+                      <label for="lastname">Surname</label>
+                      <input type="text" name="lastname" id="lastname" class="form-control" value="{{ auth.user.last_name }}">
+                      {% if errors.lastname %}
+                        <span class="help-block">{{ errors.lastname | first }}</span>
+                      {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                    {{ csrf.field | raw }}
+                  </form>
+                </div>
+                <div class="well well-sm">
+                  <p>Change Profile Picture</p>
+                  <form method="POST" action="{{ path_for('profile.picture.change') }}" enctype="multipart/form-data">
+                    <label>Select a Image:</label>
+                    <input class="form-control" type="file" name="newfile"><br>
+                    <button class="btn" type="submit">Upload</button>
+                    {{ csrf.field | raw }}
+                  </form>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

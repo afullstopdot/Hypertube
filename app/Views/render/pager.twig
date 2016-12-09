@@ -1,0 +1,11 @@
+<form action="{{ path_for('home') }}" method="GET" autocomplete="off">
+  <ul class="pager">
+      {% if page >= 2 %}
+        <li><a href="#">Previous</a></li>
+        <li><a href="#">Next</a></li>
+      {% else %}
+        <li><a href="#">Next</a></li>
+      {% endif %}
+  </ul>
+{{ csrf.field | raw }}
+</form>

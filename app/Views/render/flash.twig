@@ -1,0 +1,13 @@
+{% if flash.getMessage('info') %}
+  <div class="alert alert-info">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ flash.getMessage('info') | first }}
+  </div>
+{% endif %}
+
+{% if flash.getMessage('error') %}
+  <div class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ flash.getMessage('error') | first }}
+  </div>
+{% endif %}

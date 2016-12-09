@@ -1,0 +1,38 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+
+<div id="email-cont" class="container-fluid">
+  <div class="page-header text-center">
+    <h2>Last step of Reset.</h2>
+  </div>
+  <div class="row">
+    <div class".col-md-6 col-md-offset-3">
+      <div class="panel panel-default">
+        <div class="panel-heading"><span class="glyphicon glyphicon-log-in"></span> Enter New Password</div>
+          <div class="panel-body">
+            <form action="{{ path_for('auth.reset.change') }}" method="post" autocomplete="off">
+              <div class="form-group{{ errors.password ? ' has-error' : ''}}">
+                <label for="new_password"><span class="glyphicon glyphicon-lock"></span> New Password</label>
+                <input type="new_password" name="new_password" id="new_password" class="form-control">
+                {% if errors.new_password %}
+                  <span class="help-block" >{{ errors.new_password | first }}</span>
+                {% endif %}
+              </div>
+              <div class="form-group{{ errors.password ? ' has-error' : ''}}">
+                <label for="cnew_password"><span class="glyphicon glyphicon-lock"></span> Confrim New Password</label>
+                <input type="cnew_password" name="cnew_password" id="cnew_password" class="form-control">
+                {% if errors.cnew_password %}
+                  <span class="help-block" >{{ errors.cnew_password | first }}</span>
+                {% endif %}
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+              {{ csrf.field | raw }}
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

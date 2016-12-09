@@ -1,0 +1,44 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+{% include 'render/search_users.twig' %}
+{% if UserList is null %}
+
+  <div class="container text-center">
+    <h3>No Users</h3>
+    <a href="{{ path_for('profile.users') }}" class="btn btn-info" role="button">Back To Explore</a>
+  </div>
+
+{% else %}
+
+<div class="container-fluid text-center">
+  <h3><span class="glyphicon glyphicon-user"></h3><hr>
+    <div class="row">
+      {% for user in UserList %}
+      {% if user.name is same as(auth.user.name) %}
+      {% else %}
+
+      <div class="col-lg-3 col-sm-6">
+        <div class="card hovercard">
+          <div class="cardheader"></div>
+          <div class="avatar">
+            <img alt="" src="{{ base_url() }}/uploads/{{ user.profilePicture }}">
+          </div>
+          <div class="info">
+            <div class="title">
+              <p><strong><span class="glyphicon glyphicon-user">  {{ user.name }}</strong></p><br>
+              </div>
+              <div class="desc"><p>Name: {{ user.first_name }}</p></div>
+              <div class="desc"><p>Surname: {{ user.last_name }}</p></div>
+              <div class="desc"><p>Member Since: {{ user.created_at }}</p></div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+
+{% if auth.user is empty %}
+    {% include 'render/info.twig' %}
+{% else %}
+    {% include 'render/search.twig' %}
+    {% if movies %}
+      <div class="row">
+          {% for movie in movies %}
+              <div id="{{ movie.title }}" class="col-sm-4 text-center">
+                  <h3>{{ movie.title | raw }}</h3>
+                  <img src="{{ movie.large_cover_image }}" class="img-responsive" alt="{{ movie.title }}" width="100%" height="100%">
+                  <button class="btn" data-toggle="modal" data-target="#{{ movie.id }}"><span class="glyphicon glyphicon-info-sign"></span></button>
+                  <a href="{{ path_for('home.stream') }}"><button class="btn"><span class="glyphicon glyphicon-play"></span></button></a>
+              </div>
+
+              <div class="modal fade" id="{{ movie.id }}" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4><span class="glyphicon glyphicon-film"></span> {{ movie.title }}</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>Producton Year: {{ movie.year }}</p>
+                      <p>imdB rating: {{ movie.rating }}</p>
+                      <p>Runtime: {{ movie.runtime }} minutes</p>
+                      <p>Synopsis: {{ movie.synopsis }} </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          {% endfor %}
+      </div>
+    {% include 'render/pager.twig' %}
+    {% else %}
+      <h3>No Movies Found</h3>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,80 @@
+body {
+  padding-top: 80px;
+  padding-bottom: 40px;
+  background-color: black;
+  width: 100%;
+}
+
+h1 {
+  color: #8F9725;
+}
+
+h3 {
+  color: #8F9725;
+}
+
+p {
+  color: #8F9725;
+}
+
+.heading {
+  color: chartreuse;
+}
+
+.carousel-inner > .item > img,
+
+.carousel-inner > .item > a > img {
+  width: 100%;
+  margin: auto;
+}
+
+.stylish-input-group .input-group-addon {
+  background: white !important;
+}
+
+.stylish-input-group .form-control {
+  border-right:0;
+  box-shadow:0 0 0;
+  border-color:#ccc;
+}
+
+.stylish-input-group button {
+  border:0;
+  background:transparent;
+}
+
+.btn-googleplus {
+  background: #E93F2E;
+  border-radius: 0;
+  color: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #b72213;
+}
+
+.btn-googleplus:link, .btn-googleplus:visited {
+  color: #fff;
+}
+
+.btn-googleplus:active, .btn-googleplus:hover {
+  background: #b72213;
+  color: #fff;
+}
+
+/* Black buttons with extra padding and without rounded borders */
+.btn {
+  margin-top: 1%;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #f1f1f1;
+  border-radius: 0;
+  transition: .2s;
+}
+
+/* On hover, the color of .btn will transition to white with black text */
+.btn:hover, .btn:focus {
+ border: 1px solid #333;
+ background-color: #fff;
+ color: #000;
+}
