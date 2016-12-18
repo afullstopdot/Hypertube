@@ -38,7 +38,7 @@ $app->group('', function() {
   $this->get('/auth/password/change', 'PasswordController:getChangePassword')->setName('auth.password.change');
   $this->post('/auth/password/change', 'PasswordController:postChangePassword');
 
-  $this->get('/stream', 'MovieController:index')->setName('home.stream');
+  $this->get('/stream', 'StreamController:index')->setName('home.stream');
   $this->post('/stream/comment', 'CommentController:addComment')->setName('stream.comment');
 
 })->add(new AuthMiddleware($container));
