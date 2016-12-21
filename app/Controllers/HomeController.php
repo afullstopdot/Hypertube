@@ -34,7 +34,8 @@ class HomeController extends Controller
             $_SESSION['movies'] = $this->getSearchMovies($request);
         else
             $_SESSION['movies'] = $this->getDefaultMovies();
-        $_SESSION['watched'] = $this->container->profile_movies->getWatchedMovies($this->auth->user()->id);
+        if (isset($_SESSION['user']))
+          $_SESSION['watched'] = $this->container->profile_movies->getWatchedMovies($this->auth->user()->id);
         if (isset($_SESSION['watched']))
           $this->container->view->getEnvironment()->addGlobal('watched', $_SESSION['watched']);
         $this->container->view->getEnvironment()->addGlobal('movies', $_SESSION['movies']);
