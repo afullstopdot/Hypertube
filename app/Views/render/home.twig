@@ -13,7 +13,18 @@
                   <h3>{{ movie.title | raw }}</h3>
                   <img src="{{ movie.large_cover_image }}" class="img-responsive" alt="{{ movie.title }}" width="100%" height="100%">
                   <button class="btn" data-toggle="modal" data-target="#{{ movie.id }}"><span class="glyphicon glyphicon-info-sign"></span></button>
-                  <a href="{{ path_for('home.stream') }}"><button class="btn"><span class="glyphicon glyphicon-play"></span></button></a>
+                  <a href="{{ path_for('home.stream') }}?movie={{ movie.id }}&name={{ movie.title | url_encode }}">
+                    <button class="btn">
+                    {% set found = false %}
+                    {% for curr in watched if curr.movie_id == movie.id %}
+                        {% set found = true %}
+                        <span class="glyphicon glyphicon-repeat"></span>
+                    {% endfor %}
+                    {% if found == false %}
+                      <span class="glyphicon glyphicon-play"></span>
+                    {% endif %}
+                    </button>
+                  </a>
               </div>
 
               <div class="modal fade" id="{{ movie.id }}" role="dialog">

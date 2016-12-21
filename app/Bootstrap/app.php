@@ -76,6 +76,10 @@ $container['profile'] = function ($container) {
   return new App\Models\User;
 };
 
+$container['profile_movies'] = function ($container) {
+  return new App\Models\Movie;
+};
+
 $container['HomeController'] = function($container) {
     return new \App\Controllers\HomeController($container);
 };
@@ -94,6 +98,10 @@ $container['ProfileController'] = function($container) {
 
 $container['MovieController'] = function($container) {
     return new \App\Controllers\MovieController($container);
+};
+
+$container['StreamController'] = function($container) {
+    return new \App\Controllers\StreamController($container);
 };
 
 $container['CommentController'] = function ($container) {

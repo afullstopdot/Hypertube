@@ -30,7 +30,7 @@ class MovieController extends Controller
 
   public  function  getDefaultMovies()
   {
-    $this->last_search = $this->yts_api . '?sort_by=seeds&limit=48&page=' . $this->page;
+    $this->last_search = $this->yts_api . '?sort_by=year&limit=48&page=' . $this->page;
     $file = file_get_contents($this->last_search, true);
     $response = json_decode($file, true);
     if ($response['status'] === 'ok')
