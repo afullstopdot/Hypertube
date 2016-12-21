@@ -10,6 +10,11 @@ class MovieController extends Controller
   protected $last_search;
   protected $page = 1;
 
+  public  function  pager($request, $response)
+  {
+      // regex to replace last searched uri value with either next or prev
+  }
+
   public  function  searchMovie($title)
   {
     $this->last_search = $this->yts_api . '?sort_by=title&query_term=' . urlencode ($title) . '&page=' . $this->page;
@@ -18,7 +23,7 @@ class MovieController extends Controller
     if ($movie['status'] === 'ok')
     {
       $movie = $movie['data']['movies'];
-      $this->page = $response['data']['page_number'];
+      $this->page = intval($response['data']['page_number']);
     }
     else
     {
@@ -36,7 +41,7 @@ class MovieController extends Controller
     if ($response['status'] === 'ok')
     {
       $response = $response['data']['movies'];
-      $this->page = $response['data']['page_number'];
+      $this->page = intval($response['data']['page_number']);
       return ($response);
     }
     else
