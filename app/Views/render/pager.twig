@@ -1,11 +1,7 @@
-<form action="{{ path_for('home') }}" method="GET" autocomplete="off">
+<div class="container">
   <ul class="pager">
-      {% if page >= 2 %}
-        <li><a href="#">Previous</a></li>
-        <li><a href="#">Next</a></li>
-      {% else %}
-        <li><a href="#">Next</a></li>
-      {% endif %}
+      <li class="prev-pager"><a href="#" name="previous" onclick="pager(this.name)">Previous</a></li>
+      <li><a href="#" name="next" onclick="pager(this.name)">Next</a></li>
   </ul>
-{{ csrf.field | raw }}
-</form>
+</div>
+<!-- not enough time to make pager be disabled if no previous exists etc-->

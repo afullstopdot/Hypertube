@@ -17,6 +17,10 @@ p {
   color: #8F9725;
 }
 
+.prev-pager {
+    display: none;
+}
+
 .heading {
   color: chartreuse;
 }

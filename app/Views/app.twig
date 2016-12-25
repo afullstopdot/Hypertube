@@ -36,11 +36,107 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <script src="{{ base_url() }}/js/app.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script type="text/javascript">
       function googleTranslateElementInit() {
         new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
       }
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+    function pager(str) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var response = JSON.parse(xmlhttp.responseText);
+          var movie = response[0];
+          var watched = response[1];
+          var page_num = response['page'];
+          // change the title
+          var h3 = document.getElementsByClassName("movie-title");
+          for (var i in h3) {
+            try {
+              h3[i].innerHTML = movie[i]['title'];// edit html content
+            } catch (e) {
+              console.log(e.message);              // "null has no properties"
+            }
+          }
+          // change img
+          var img = document.getElementsByClassName("img-responsive");
+          for (var a in img) {
+            try {
+              img[a].src = movie[a]['large_cover_image'];// edit html content
+            } catch (e) {
+              console.log(e.message);              // "null has no properties"
+            }
+          }
+          //change stream id
+          var atag = document.getElementsByClassName("stream-id");
+          for (var b in atag) {
+            try {
+              //regex, gets url, replaces with new id then new movie name, if stream doesnt recognize the movie possibly cause of my regex
+              atag[b].href = atag[b].href.replace(/movie=\d+/i, "movie=" + movie[b]['id']);
+              atag[b].href = atag[b].href.replace(/name=.+/, "name=" + encodeURI(movie[b]['title']));
+            } catch (e) {
+              console.log(e.message);              // "null has no properties"
+            }
+          }
+          //clear all spans so next check creates right spans for watched movies
+          var c_span = document.getElementsByClassName("glyphicon glyphicon-repeat");
+          for (var d in c_span) {
+            try {
+              c_span[d].className = "glyphicon glyphicon-play";
+            } catch (e) {
+              console.log(e.message);              // "null has no properties"
+            }
+          }
+          // check if movie has been watched, and change the span
+          var span = [].slice.apply(document.getElementsByClassName("glyphicon glyphicon-play"));
+          for (var i = 0; i < span.length; i++) {
+            try {
+              for (var count = 0; count < watched.length; count++)
+              {
+                if (movie[i]['id'] == watched[count]['movie_id'])
+                  span[i].className = span[i].className.replace(/glyphicon glyphicon-play/, "glyphicon glyphicon-repeat");
+              }
+            } catch (ex) {
+              console.log('Error checking if movie, was watched previously.');
+            }
+          }
+          // time to change the modal info
+          var modal_fade = document.getElementsByClassName("modal fade");
+          var modal_title = document.getElementsByClassName("movie-title-h4");
+          var movie_year = document.getElementsByClassName("movie-year");
+          var movie_rat = document.getElementsByClassName("movie-rating");
+          var movie_run = document.getElementsByClassName("movie-runtime");
+          var movie_sys = document.getElementsByClassName("movie-synopsis");
+          for (var f in modal_fade)
+          {
+            try {
+              modal_title[f].innerHTML = movie[f]['title'];
+              movie_year[f].innerHTML = "Production Year: " + movie[f]['year'];
+              movie_rat[f].innerHTML = "imdB rating: " + movie[f]['rating'];
+              movie_run[f].innerHTML = "Runtime: " + movie[f]['runtime'] + " minutes";
+              movie_sys[f].innerHTML = "Synopsis: " + movie[f]['synopsis'];
+            } catch (e) {
+              console.log(e.message);
+            }
+          }
+          // adjust pager
+          if (page_num > 1)
+          {
+            try {
+              var pager = [].slice.apply(document.getElementsByClassName("prev-pager"));
+              console.log(pager);
+              // pager.style.display = "in-line";
+            } catch (e) {
+              console.log("Error updating Pager - " + e.message);
+            }
+          }
+        }
+      };
+      xmlhttp.open("GET", "{{ path_for('pager' )}}?pager=" + str, true);
+      xmlhttp.send();
+    }
+  </script>
   </body>
 </html>

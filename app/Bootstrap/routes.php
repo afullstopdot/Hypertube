@@ -33,7 +33,8 @@ $app->group('', function() {
   $this->get('/profile/explore', 'ExploreUsersController:getExplore')->setName('profile.users');
   $this->get('/profile/explore/search', 'ExploreUsersController:getExploreSearch')->setName('profile.users.search');
 
-  $this->post('search', 'HomeController:searchMovies')->setName('home.search');
+  $this->post('/search', 'HomeController:searchMovies')->setName('home.search');
+  $this->get('/search/change', 'HomeController:getPager')->setName('pager');
 
   $this->get('/auth/password/change', 'PasswordController:getChangePassword')->setName('auth.password.change');
   $this->post('/auth/password/change', 'PasswordController:postChangePassword');

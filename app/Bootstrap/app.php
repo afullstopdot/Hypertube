@@ -4,7 +4,7 @@ use Respect\Validation\Validator as v;
 
 session_start();
 
-ini_set('display_errors', true);
+// ini_set('display_errors', true);
 
 require __DIR__ . '/../../vendor/autoload.php';
 
