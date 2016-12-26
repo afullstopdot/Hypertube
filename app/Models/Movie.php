@@ -20,7 +20,7 @@ class Movie extends Model
 
     public function addWatchedMovies($movie_id, $movie_name, $user_id)
     {
-      $exists = $this->where('movie_id', $movie_id)->first();
+      $exists = $this->where(['movie_id' => $movie_id, 'user_id' => $user_id])->first();
       if (empty($exists)) {
         return $this->create([
           'movie_id' => $movie_id,

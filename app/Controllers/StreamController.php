@@ -9,11 +9,11 @@ class StreamController extends Controller
   // jquery post
   function addMovieToList($movie, $name)
   {
-      $this->container->profile_movies->addWatchedMovies(
-        $movie,
-        $name,
-        $this->auth->user()->id
-      );
+    $this->container->profile_movies->addWatchedMovies(
+      $movie,
+      $name,
+      $this->auth->user()->id
+    );
   }
 
   function index($request, $response)
@@ -24,7 +24,9 @@ class StreamController extends Controller
         $request->getParam('movie'),
         urldecode($request->getParam('name'))
       );
+      $_SESSION['movie_details'] = $this->container->MovieController->getMovieDetails($request->getParam('movie'));
     }
+    $this->container->view->getEnvironment()->addGlobal('movie_details', $_SESSION['movie_details']);
     return $this->view->render($response, 'render/stream.twig');
   }
 }

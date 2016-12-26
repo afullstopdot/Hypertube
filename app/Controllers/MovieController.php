@@ -28,6 +28,24 @@ class MovieController extends Controller
       return ($movie);
   }
 
+  public  function  getMovieDetails($movie)
+  {
+    $url = 'https://yts.ag/api/v2/movie_details.json?movie_id=' . $movie . '&with_cast=true';
+
+    $movie_details = file_get_contents($url);
+    $movie_details = json_decode($movie_details, true);
+    if ($movie_details['status'] === 'ok')
+    {
+      $omdb_url = 'http://www.omdbapi.com/?i=' . $movie_details['data']['movie']['imdb_code'] . '&plot=full&r=json';
+      $omdb_response = file_get_contents($omdb_url);
+      $omdb_details = json_decode($omdb_response, true);
+      if ($omdb_details['Response'] === 'True')
+        return ($omdb_details);
+      $movie_details['data']['movie'];
+    }
+    return (NULL);
+  }
+
   public  function  getNextPage()
   {
     if (isset($_SESSION['page_number']))

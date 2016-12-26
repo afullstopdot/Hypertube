@@ -1,0 +1,45 @@
+{% if movie_details is empty %}
+
+<h3>Unable to retrieve production info</h3>
+
+{% else %}
+
+<div class="container-fluid">
+  <div class="list-group">
+    <a href="#" class="list-group-item active">
+      <h4 class="list-group-item-heading">Summary</h4>
+      <p class="list-group-item-text">{% if movie_details.Plot is empty %}N/A{% else %}{{ movie_details.Plot }}{% endif %}</p>
+    </a>
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">Cast</h4>
+        <p class="list-group-item-text">Director: {% if movie_details.Director is empty %}N/A{% else %}{{ movie_details.Director }}{% endif %}</p>
+        <p class="list-group-item-text">Producer: {% if movie_details.Writer is empty %}N/A{% else %}{{ movie_details.Writer }}{% endif %}</p>
+        <p class="list-group-item-text">Actors: {% if movie_details.Actors is empty %}N/A{% else %}{{ movie_details.Actors }}{% endif %}</p>
+    </a>
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">Production Year</h4>
+      <p class="list-group-item-text">{% if movie_details.Year is empty %}N/A{% else %}{{ movie_details.Year }}{% endif %}</p>
+    </a>
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">Length</h4>
+      <p class="list-group-item-text">{% if movie_details.Runtime is empty %}N/A{% else %}{{ movie_details.Runtime }} minutes{% endif %}</p>
+    </a>
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">IMDB grade</h4>
+      <p class="list-group-item-text">{% if movie_details.imdbRating is empty %}N/A{% else %}{{ movie_details.imdbRating }}{% endif %}</p>
+    </a>
+    <a href="#" class="list-group-item">
+      <p class="list-group-item-heading">Cover Story</p>
+      <h4 class="list-group-item-text">{% if movie_details.coverStory is empty %}N/A{% else %}{{ movie_details.imdbRatin }}{% endif %}</h4>
+    </a>
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">Extra</h4>
+      <p class="list-group-item-text">Genre/s: {% if movie_details.Genre is empty %}N/A{% else %}{{ movie_details.Genre }}{% endif %}</p>
+      <p class="list-group-item-text">Language: {% if movie_details.Language is empty %}N/A{% else %}{{ movie_details.Language }}{% endif %}</p>
+      <p class="list-group-item-text">Awards: {% if movie_details.Awards is empty %}N/A{% else %}{{ movie_details.Awards }}{% endif %}</p>
+      <p class="list-group-item-text">Country: {% if movie_details.Country is empty %}N/A{% else %}{{ movie_details.Country }}{% endif %}</p>
+    </a>
+  </div>
+</div>
+
+{% endif %}
