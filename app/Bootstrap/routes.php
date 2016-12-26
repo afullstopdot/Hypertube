@@ -41,6 +41,6 @@ $app->group('', function() {
 
   $this->get('/stream', 'StreamController:index')->setName('home.stream');
   $this->get('/stream/meta', 'StreamController:addMovieToList')->setName('stream.meta');
-  $this->post('/stream/comment', 'CommentController:addComment')->setName('stream.comment');
+  $this->get('/stream/comment', 'CommentController:addComment')->setName('stream.comment');
 
 })->add(new AuthMiddleware($container));

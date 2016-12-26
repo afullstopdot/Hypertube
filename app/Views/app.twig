@@ -127,7 +127,6 @@
             try {
               var pager = [].slice.apply(document.getElementsByClassName("prev-pager"));
               console.log(pager);
-              // pager.style.display = "in-line";
             } catch (e) {
               console.log("Error updating Pager - " + e.message);
             }
@@ -137,6 +136,115 @@
       xmlhttp.open("GET", "{{ path_for('pager' )}}?pager=" + str, true);
       xmlhttp.send();
     }
+  </script>
+  <script>
+    // send comment using ajax
+    $("#comment-form").submit(function(event) {
+       /* stop form from submitting normally */
+       event.preventDefault();
+       // pass the movie_id
+       var get_parameters = window.location.href.substring(window.location.href.indexOf("movie"));
+       var movie_id = get_parameters.substring(0, get_parameters.indexOf("&"));
+       /* get the action attribute from the <form action=""> element */
+       var $form = $(this), url = $form.attr('action');
+       /* Send the data using post with element id name and name2*/
+       var posting = $.get( url,
+         {
+           comment: $('#comment-area').val(),
+           movie: movie_id.substring(movie_id.indexOf("=") + 1)
+         }
+       );
+       /* Alerts the results */
+       posting.done(function(data) {
+         if (window.location.href.indexOf("stream") != -1) //check that we on the stream page
+         {
+           var get_parameters = window.location.href.substring(window.location.href.indexOf("movie"));
+           var url = window.location.href.substring(0, window.location.href.indexOf("?")) + "/comment";
+           // send ajax request
+           var xmlhttp = new XMLHttpRequest();
+           xmlhttp.onreadystatechange = function() {
+             if (this.readyState == 4 && this.status == 200) {
+               // http request success now get comments and update the page
+               var response = JSON.parse(xmlhttp.responseText);
+               // if this is true, add elements to dom with comments
+               if (response.length > 0)
+               {
+                 var comment_elem;
+                 var hr_elem;
+                 for (var count = 0; count < response.length; count++)
+                 {
+                  //  console.log(response[count]['comment_id']);
+                   if ($("#" + response[count]['comment_id']).length == 0) {
+
+                     console.log("Comment: " + response[count]['name'] + ": '" + response[count]['comment'] + "' at " + response[count]['created_at'].substring(0, response[count]['created_at'].indexOf(" ")));
+                     // start adding comments to dom.
+                     comment_elem = document.createElement("P");
+                     comment_elem.setAttribute("id", response[count]['comment_id']);
+                     comment_elem.style.fontStyle = "italic";
+                     // comment_textnode = document.createTextNode(response[count]['name'] + ": '" + response[count]['comment'] + "' at " + response[count]['created_at'].substring(0, response[count]['created_at'].indexOf(" ")));
+                     comment_elem.appendChild(document.createTextNode(response[count]['name'] + ": '" + response[count]['comment'] + "' at " + response[count]['created_at'].substring(0, response[count]['created_at'].indexOf(" "))));
+                     document.getElementById("comment-list").appendChild(comment_elem);
+
+                     hr_elem = document.createElement("HR");
+                     document.getElementById("comment-list").appendChild(hr_elem);
+
+                  }
+                  else
+                    console.log('Exists');
+                 }
+               }
+               // end of update
+             }
+           };
+           xmlhttp.open("GET", "{{ path_for('stream.comment' )}}?request=comment&" + get_parameters, true);
+           xmlhttp.send();
+           // end of request
+         }
+       });
+    });
+    // update list of comments using ajax
+    $(document).ready(function() {
+      if (window.location.href.indexOf("stream") != -1) //check that we on the stream page
+      {
+        var get_parameters = window.location.href.substring(window.location.href.indexOf("movie"));
+        var url = window.location.href.substring(0, window.location.href.indexOf("?")) + "/comment";
+        // send ajax request
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            // http request success now get comments and update the page
+            var response = JSON.parse(xmlhttp.responseText);
+            // if this is true, add elements to dom with comments
+            if (response.length > 0)
+            {
+              var comment_elem;
+              var hr_elem;
+              for (var count = 0; count < response.length; count++)
+              {
+                if($("#" + response[count]['comment_id']).length == 0) {
+
+                  console.log("Comment: " + response[count]['name'] + ": '" + response[count]['comment'] + "' at " + response[count]['created_at'].substring(0, response[count]['created_at'].indexOf(" ")));
+                  // start adding comments to dom.
+                  comment_elem = document.createElement("P");
+                  comment_elem.style.fontStyle = "italic";
+                  comment_elem.setAttribute("id", response[count]['comment_id']);
+                  // comment_textnode = document.createTextNode(response[count]['name'] + ": '" + response[count]['comment'] + "' at " + response[count]['created_at'].substring(0, response[count]['created_at'].indexOf(" ")));
+                  comment_elem.appendChild(document.createTextNode(response[count]['name'] + ": '" + response[count]['comment'] + "' at " + response[count]['created_at'].substring(0, response[count]['created_at'].indexOf(" "))));
+                  document.getElementById("comment-list").appendChild(comment_elem);
+
+                  hr_elem = document.createElement("HR");
+                  document.getElementById("comment-list").appendChild(hr_elem);
+                }
+              }
+            }
+            // end of update
+          }
+        };
+        xmlhttp.open("GET", "{{ path_for('stream.comment' )}}?request=comment&" + get_parameters, true);
+        xmlhttp.send();
+        // end of request
+      }
+    });
   </script>
   </body>
 </html>

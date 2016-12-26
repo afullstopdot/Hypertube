@@ -9,7 +9,6 @@ class StreamController extends Controller
   // jquery post
   function addMovieToList($movie, $name)
   {
-    // echo $movie . ':' . $name . ':' . $this->auth->user()->id;die();
       $this->container->profile_movies->addWatchedMovies(
         $movie,
         $name,
@@ -26,6 +25,6 @@ class StreamController extends Controller
         urldecode($request->getParam('name'))
       );
     }
-    return $this->view->render($response, 'render/stream-page.twig');
+    return $this->view->render($response, 'render/stream.twig');
   }
 }

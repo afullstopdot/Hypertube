@@ -80,6 +80,10 @@ $container['profile_movies'] = function ($container) {
   return new App\Models\Movie;
 };
 
+$container['profile_comments'] = function ($container) {
+  return new App\Models\Comment;
+};
+
 $container['HomeController'] = function($container) {
     return new \App\Controllers\HomeController($container);
 };

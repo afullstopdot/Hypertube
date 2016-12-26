@@ -1,10 +1,22 @@
-<div class="container">
-  <form action="{{ path_for('stream.comment') }}" method="POST">
-    <div class="form-group">
-      <label for="comment">Comment:</label>
-      <textarea class="form-control" rows="5" id="comment"></textarea>
-      <input type="submit">
-    </div>
-    {{ csrf.field | raw }}
-  </form>
+<div class="container-fluid">
+  <!--  check if user is logged on, if so then post a comment-->
+  {% if auth.user is empty %}
+    <h3>Log in to comment</h3>
+  {% else %}
+  <div class="well">
+    <p>Leave a Comment:</p>
+    <form id="comment-form" action="{{ path_for('stream.comment') }}" method="get" role="form">
+      <div class="form-group">
+        <textarea id="comment-area" name="comment" placeholder="awesome movie!" class="form-control" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      {{ csrf.field | raw }}
+    </form>
+  </div>
+  {% endif %}
+  <hr>
+
+  <div id="comment-list" class="alert alert-info">
+    <!--  check if there are comments, if so display them all, error: the kets arent th right names-->
+  </div>
 </div>
