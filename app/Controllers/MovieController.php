@@ -10,6 +10,7 @@ class MovieController extends Controller
   protected $last_search = NULL;
   protected $page = 1;
 
+  // this function to be used only in this class checks if a page_number is valid.
   private function  checkPageNumValid($url)
   {
     $movie = file_get_contents($url);
@@ -19,6 +20,7 @@ class MovieController extends Controller
     return (0);
   }
 
+  // if checkPageNumValid returns true, searchURI then gets the movie list,
   private function  searchURI($url)
   {
       $movie = file_get_contents($url);
@@ -28,6 +30,7 @@ class MovieController extends Controller
       return ($movie);
   }
 
+  // returns more information, about the cast etc from omdb using imdb code retireved from yts
   public  function  getMovieDetails($movie)
   {
     $url = 'https://yts.ag/api/v2/movie_details.json?movie_id=' . $movie . '&with_cast=true';
@@ -46,6 +49,7 @@ class MovieController extends Controller
     return (NULL);
   }
 
+  // get the previous page of last_search URI
   public  function  getNextPage()
   {
     if (isset($_SESSION['page_number']))
@@ -63,6 +67,7 @@ class MovieController extends Controller
     return ($this->getDefaultMovies());
   }
 
+  // get the next page of last_search URI
   public  function  getPreviousPage()
   {
     if (isset($_SESSION['page_number']))
@@ -83,6 +88,7 @@ class MovieController extends Controller
     return ($this->getDefaultMovies());
   }
 
+  // search for a specific movie
   public  function  searchMovie($title)
   {
     if (isset($_SESSION['page_number']))
@@ -104,6 +110,8 @@ class MovieController extends Controller
     return ($movie);
   }
 
+  // get list of movies from yts based on year of release
+  // get defualt should take params to sort and filter, from Name, imdb, genre and production year gap. 
   public  function  getDefaultMovies()
   {
     $this->last_search = $this->yts_api . '?sort_by=year&limit=15&page=' . $this->page;
@@ -119,4 +127,5 @@ class MovieController extends Controller
     else
       $this->flash->addMessage('error', 'YTS server error.');
   }
+
 }

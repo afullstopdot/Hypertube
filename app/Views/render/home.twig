@@ -5,8 +5,12 @@
 {% if auth.user is empty %}
     {% include 'render/info.twig' %}
 {% else %}
+
     {% include 'render/search.twig' %}
+    {% include 'render/sort-filter.twig' %}
+
     {% if movies %}
+
     <div class="container">
       <div id="movie-thumbnails" class="row">
           {% for movie in movies %}

@@ -83,6 +83,25 @@ p {
  color: #000;
 }
 
+
+/* Black buttons with extra padding and without rounded borders */
+.btn-sort {
+  margin-top: 1%;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #f1f1f1;
+  border-radius: 0;
+  transition: .2s;
+}
+
+/* On hover, the color of .btn will transition to white with black text */
+.btn-sort:hover, .btn:focus {
+ border: 1px solid #333;
+ background-color: #fff;
+ color: #000;
+}
+
 .card p {
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-size: 15px;
