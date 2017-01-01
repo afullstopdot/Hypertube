@@ -93,7 +93,15 @@ class MovieController extends Controller
   {
     if (isset($_SESSION['page_number']))
       $_SESSION['page_number'] = intval(1);
-    $this->last_search = $this->yts_api . '?sort_by=title&limit=15&query_term=' . urlencode ($title) . '&page=' . $_SESSION['page_number'];
+    // search uri
+    $this->last_search = $this->yts_api .
+      '?sort_by=' . $_SESSION['sort-by'] .
+      '&limit=15&query_term=' . urlencode ($title) .
+      '&page=' . $_SESSION['page_number'] .
+      '&genre=' . $_SESSION['genre'] .
+      '&minimum_rating=' . $_SESSION['imdb'] .
+      '&order_by=' . $_SESSION['order-by'];
+
     $_SESSION['last_search'] = $this->last_search;
     $movie = file_get_contents($this->last_search);
     $movie = json_decode($movie, true);
@@ -111,10 +119,16 @@ class MovieController extends Controller
   }
 
   // get list of movies from yts based on year of release
-  // get defualt should take params to sort and filter, from Name, imdb, genre and production year gap. 
   public  function  getDefaultMovies()
   {
-    $this->last_search = $this->yts_api . '?sort_by=year&limit=15&page=' . $this->page;
+    // search uri
+    $this->last_search = $this->yts_api .
+      '?sort_by=' . $_SESSION['sort-by'] .
+      '&limit=15&page=' . $this->page .
+      '&genre=' . $_SESSION['genre'] .
+      '&minimum_rating=' . $_SESSION['imdb'] .
+      '&order_by=' . $_SESSION['order-by'];
+
     $_SESSION['last_search'] = $this->last_search;
     $file = file_get_contents($this->last_search, true);
     $response = json_decode($file, true);

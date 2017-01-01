@@ -40,17 +40,32 @@ class HomeController extends Controller
 
     public  function    index($request, $response)
     {
-        if (!empty($request->getParam('search')))
-          $_SESSION['movies'] = $this->getSearchMovies($request);
-        else
-          $_SESSION['movies'] = $this->getDefaultMovies();
-        if (isset($_SESSION['user']))
-          $_SESSION['watched'] = $this->container->profile_movies->getWatchedMovies($this->auth->user()->id);
-        if (isset($_SESSION['watched']))
-          $this->container->view->getEnvironment()->addGlobal('watched', $_SESSION['watched']);
-        $_SESSION['old_movies'] = $_SESSION['movies'];
-        $this->container->view->getEnvironment()->addGlobal('movies', $_SESSION['movies']);
-        $this->container->view->getEnvironment()->addGlobal('page', $_SESSION['page_number']);
-        return $this->view->render($response, 'render/home.twig');
+      // reset default values for default movie list params
+      $_SESSION['genre'] = 'all';
+      $_SESSION['imdb'] = 'all';
+      $_SESSION['sort-by'] = 'year';
+      $_SESSION['order-by'] = 'desc';
+      // check if sort and filter vars are set, then update the request uri
+      if (!empty($request->getParam('sort-by')))
+        $_SESSION['sort-by'] = $request->getParam('sort-by');
+      if (!empty($request->getParam('genre')))
+        $_SESSION['genre'] = $request->getParam('genre');
+      if (!empty($request->getParam('imdb')))
+        $_SESSION['imdb'] = $request->getParam('imdb');
+      if (!empty($request->getParam('order-by')))
+        $_SESSION['order-by'] = $request->getParam('order-by');
+      // affect new movie list now
+      if (!empty($request->getParam('search')))
+        $_SESSION['movies'] = $this->getSearchMovies($request);
+      else
+        $_SESSION['movies'] = $this->getDefaultMovies();
+      if (isset($_SESSION['user']))
+        $_SESSION['watched'] = $this->container->profile_movies->getWatchedMovies($this->auth->user()->id);
+      if (isset($_SESSION['watched']))
+        $this->container->view->getEnvironment()->addGlobal('watched', $_SESSION['watched']);
+      $_SESSION['old_movies'] = $_SESSION['movies'];
+      $this->container->view->getEnvironment()->addGlobal('movies', $_SESSION['movies']);
+      $this->container->view->getEnvironment()->addGlobal('page', $_SESSION['page_number']);
+      return $this->view->render($response, 'render/home.twig');
     }
 }
