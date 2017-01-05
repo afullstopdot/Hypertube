@@ -25,7 +25,7 @@ class AuthController extends Controller
       '&client_id=262198179634-6n3qa2c03nb9p73v66k2e6bu6o4rer55.apps.googleusercontent.com' .
       '&client_secret=IDfZXm5WBAKBXREhX25VCkZh' .
       '&code=' . $code .
-      '&redirect_uri=' . $_SERVER['SERVER_NAME'] . '/hypertube/home/oauth/google/signin';
+      '&redirect_uri=' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signin';
       // send post using curl
       $ch = curl_init($url);
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -93,7 +93,7 @@ class AuthController extends Controller
       $auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' .
       'response_type=code&' .
       'client_id=262198179634-6n3qa2c03nb9p73v66k2e6bu6o4rer55.apps.googleusercontent.com&' .
-      'redirect_uri=' . $_SERVER['SERVER_NAME'] . '/hypertube/home/oauth/google/signin' . '&' .
+      'redirect_uri=' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signin' . '&' .
       'scope=profile email&' .
       'state=' . $_SESSION['google_state'] . '&' .
       'prompt=consent  select_account';
@@ -120,7 +120,7 @@ class AuthController extends Controller
       '&client_id=262198179634-6n3qa2c03nb9p73v66k2e6bu6o4rer55.apps.googleusercontent.com' .
       '&client_secret=IDfZXm5WBAKBXREhX25VCkZh' .
       '&code=' . $code .
-      '&redirect_uri=' . $_SERVER['SERVER_NAME'] . '/hypertube/home/oauth/google/signup';
+      '&redirect_uri=' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signup';
       // send post using curl
       $ch = curl_init($url);
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -196,7 +196,7 @@ class AuthController extends Controller
       $auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' .
       'response_type=code&' .
       'client_id=262198179634-6n3qa2c03nb9p73v66k2e6bu6o4rer55.apps.googleusercontent.com&' .
-      'redirect_uri=' . $_SERVER['SERVER_NAME'] . '/hypertube/home/oauth/google/signup' . '&' .
+      'redirect_uri=' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signup' . '&' .
       'scope=profile email&' .
       'state=' . $_SESSION['google_state'] . '&' .
       'prompt=consent  select_account';
@@ -221,7 +221,7 @@ class AuthController extends Controller
         '&client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
         '&client_secret=81ace918b83a8e304ddbd65083a4f5d68ce798c80f83551bc0850bdf58b90721' .
         '&code=' . $code .
-        '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':80' . '/hypertube/home/oauth/42/signin' .
+        '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signin' .
         '&state=' . $_SESSION['state'];
         // send post using curl
         $ch = curl_init($url);
@@ -304,7 +304,7 @@ class AuthController extends Controller
       $_SESSION['state'] = hash('whirlpool', random_int(100, 999));
       $auth_url = 'https://api.intra.42.fr/oauth/authorize?' .
       'client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
-      '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':80/hypertube/home/oauth/42/signin' .
+      '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signin' .
       '&response_type=code&scope=public' .
       '&state=' . $_SESSION['state'];
       // redirect the users to 42 oauth, it will redirect them back here.
@@ -329,7 +329,7 @@ class AuthController extends Controller
         '&client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
         '&client_secret=81ace918b83a8e304ddbd65083a4f5d68ce798c80f83551bc0850bdf58b90721' .
         '&code=' . $code .
-        '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':80/hypertube/home/oauth/42/signup' .
+        '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signup' .
         '&state=' . $_SESSION['state'];
         // send post using curl
         $ch = curl_init($url);

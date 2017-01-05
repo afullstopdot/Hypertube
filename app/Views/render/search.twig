@@ -1,3 +1,7 @@
+<div class="container">
+  <br><br><a href="#search-sort" data-toggle="collapse"><span class="glyphicon glyphicon-sort"> & <span class="glyphicon glyphicon-filter"></a>
+</div>
+<div id="search-sort" class="collapse">
 <form action="{{ path_for('home') }}" method="GET" autocomplete="off">
   <div class="container">
     <div class="row">
@@ -74,3 +78,4 @@
   </div>
   {{ csrf.field | raw }}
 </form>
+</div>

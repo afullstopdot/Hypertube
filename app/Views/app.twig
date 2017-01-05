@@ -26,6 +26,7 @@
         <div class="container">
           <div id="google_translate_element"></div>
         </div>
+        <div id="loader"></div>
         {% block content %}{% endblock %}
       </div>
       <br>
@@ -43,7 +44,14 @@
       }
     </script>
     <script>
+      document.getElementById("loader").style.display = "block";
+      $(document).ready(function() {
+        document.getElementById("loader").style.display = "none";
+      });
+    </script>
+    <script>
     function pager(str) {
+      document.getElementById("loader").style.display = "block";
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -131,6 +139,7 @@
               console.log("Error updating Pager - " + e.message);
             }
           }
+          document.getElementById("loader").style.display = "none";
         }
       };
       xmlhttp.open("GET", "{{ path_for('pager' )}}?pager=" + str, true);
@@ -138,6 +147,7 @@
     }
   </script>
   <script>
+    document.getElementById("loader").style.display = "block";
     // send comment using ajax
     $("#comment-form").submit(function(event) {
        /* stop form from submitting normally */
@@ -193,6 +203,7 @@
                     console.log('Exists');
                  }
                }
+               document.getElementById("loader").style.display = "none";
                // end of update
              }
            };
@@ -203,6 +214,7 @@
        });
     });
     // update list of comments using ajax
+    document.getElementById("loader").style.display = "block";
     $(document).ready(function() {
       if (window.location.href.indexOf("stream") != -1) //check that we on the stream page
       {
@@ -237,6 +249,7 @@
                 }
               }
             }
+            document.getElementById("loader").style.display = "none";
             // end of update
           }
         };
