@@ -349,12 +349,6 @@ class AuthController extends Controller
         else
           $_SESSION['42_access_token'] = $api_response['access_token'];
       }
-      else
-      {
-        // the state is wrong means someone is trying to access illegally.
-        echo 'CSF caught, fuck off.';
-        die();
-      }
       return $response->withRedirect($this->router->pathFor('oauth.42.signup'));
     }
 
@@ -415,7 +409,7 @@ class AuthController extends Controller
       $_SESSION['state'] = hash('whirlpool', random_int(100, 999));
       $auth_url = 'https://api.intra.42.fr/oauth/authorize?' .
       'client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
-      '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':80/hypertube/home/oauth/42/signup' .
+      '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signup' .
       '&response_type=code&scope=public' .
       '&state=' . $_SESSION['state'];
       // redirect the users to 42 oauth, it will redirect them back here.

@@ -36,6 +36,7 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script src="https://cdn.jsdelivr.net/webtorrent/latest/webtorrent.min.js"></script>
     <script src="{{ base_url() }}/js/app.js"></script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script type="text/javascript">
@@ -213,11 +214,12 @@
          }
        });
     });
-    // update list of comments using ajax
+    // update list of comments using ajax, download torrent
     document.getElementById("loader").style.display = "block";
     $(document).ready(function() {
       if (window.location.href.indexOf("stream") != -1) //check that we on the stream page
       {
+        // download torrent and stream it
         var get_parameters = window.location.href.substring(window.location.href.indexOf("movie"));
         var url = window.location.href.substring(0, window.location.href.indexOf("?")) + "/comment";
         // send ajax request

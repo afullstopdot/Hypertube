@@ -6,7 +6,36 @@ use \Slim\Views\Twig as View;
 
 class StreamController extends Controller
 {
-  // jquery post
+  function getTorrent($movie, $name)
+  {
+      $list = $_SESSION['movies'];
+
+      foreach ($list as $value) {
+        if ($value['id'] == $movie)
+        {
+          $torrents = $value['torrents'];
+          break;
+        }
+      }
+
+      if (sizeof($torrents) > 1) {
+        foreach ($torrents as $value) {
+          if ($value['quality'] == '1080p')
+            return ($value['url']);
+        }
+      }
+      else {
+        foreach ($torrents as $value) {
+            return ($value['url']);
+        }
+      }
+  }
+
+  function downloadMovie($url)
+  {
+    // download torrent lol
+  }
+
   function addMovieToList($movie, $name)
   {
     $this->container->profile_movies->addWatchedMovies(

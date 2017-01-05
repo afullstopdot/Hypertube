@@ -5,10 +5,8 @@
 <div class="container-fluid">
 
   <div align="center" class="embed-responsive embed-responsive-16by9">
-      <video autoplay loop class="embed-responsive-item">
-          <source src="https://www.youtube.com/embed/SpXw0qiy3Wo" type="video/mp4">
-      </video>
-  </div>
+      <video data-dashjs-player autoplay class="embed-responsive-item" src="{{ base_url() }}/movies/Alive.mkv" controls></video>
+  </div><br><br>
   {% include 'render/movie-info.twig' %}
   {% include 'render/comments.twig' %}
 </div>
