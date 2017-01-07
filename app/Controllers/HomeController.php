@@ -38,12 +38,44 @@ class HomeController extends Controller
       return ($this->container->MovieController->getDefaultMovies());
     }
 
+    public   function   time_diff($b, $a) {
+      // get date diff in days
+      $date1 = date_create($a);
+      $date2 = date_create($b);
+
+      $diff = date_diff($date1, $date2);
+      return ($diff->format("%R%a days"));
+    }
+
+    public  function    removeMovies($list)
+    {
+      // check difference in days
+      foreach ($list as $value) {
+        $days  = intval(trim($this->time_diff($value['updated_at'], $value['created_at']), '+-'));
+        if ($days > 30) {
+          // hasnt been watched for a month, remove
+          $path = realpath($value['full_path'] . '/' . $value['path']);
+          if (is_writable($path)) {
+            // is writable delete
+            if (unlink($path) == true) //remove in db aswell
+              $this->container->downloads->removeInactive($value['id']);
+            else
+              echo 'Unlink failed to delete movie, try again.';
+          }
+        }
+      }
+    }
+
     public  function    index($request, $response)
     {
-      // reset default values for default movie list params
+      // remove movies that havent been watched in over a month
+      $inactive = $this->container->downloads->getInactive();
+      if (!empty($inactive))
+        $this->removeMovies($inactive);
+      // reset default valu es for default movie list params
       $_SESSION['genre'] = 'all';
       $_SESSION['imdb'] = 'all';
-      $_SESSION['sort-by'] = 'year';
+      $_SESSION['sort-by'] = 'date_added';
       $_SESSION['order-by'] = 'desc';
       // check if sort and filter vars are set, then update the request uri
       if (!empty($request->getParam('sort-by')))

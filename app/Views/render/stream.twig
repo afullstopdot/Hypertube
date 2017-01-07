@@ -3,10 +3,13 @@
 {% block content %}
 
 <div class="container-fluid">
-
-  <div align="center" class="embed-responsive embed-responsive-16by9">
-      <video data-dashjs-player autoplay class="embed-responsive-item" src="{{ base_url() }}/movies/Alive.mkv" controls></video>
-  </div><br><br>
+  {% if movie_path.path is empty %}
+    <div class="container text-center"><br><br><h3>Movie is downloading, stream will begin shortly</h3><br><br></div>
+  {% else %}
+    <div align="center" class="embed-responsive embed-responsive-16by9">
+        <video data-dashjs-player autoplay class="embed-responsive-item" src="{{ base_url() }}/movies/{{ movie_path.path }}" controls></video>
+    </div><br><br>
+  {% endif %}
   {% include 'render/movie-info.twig' %}
   {% include 'render/comments.twig' %}
 </div>

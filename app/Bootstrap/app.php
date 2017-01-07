@@ -84,6 +84,10 @@ $container['profile_comments'] = function ($container) {
   return new App\Models\Comment;
 };
 
+$container['downloads'] = function ($container) {
+  return new App\Models\Download;
+};
+
 $container['HomeController'] = function($container) {
     return new \App\Controllers\HomeController($container);
 };
