@@ -14,6 +14,7 @@
       <div id="movie-thumbnails" class="row">
           {% for movie in movies %}
               <div id="{{ movie.title }}" class="col-sm-4 text-center">
+                  <p class="movie-title">{{ movie.title | raw }}</p>
                   <img src="{{ movie.large_cover_image }}" class="img-responsive" alt="{{ movie.title }}" width="100%" height="100%">
                   <button class="btn" data-toggle="modal" data-target="#{{ movie.id }}"><span class="glyphicon glyphicon-info-sign"></span></button>
                   <a class="stream-id" href="{{ path_for('home.stream') }}?movie={{ movie.id }}&name={{ movie.title | url_encode }}">

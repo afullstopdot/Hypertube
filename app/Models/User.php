@@ -85,7 +85,8 @@ class User extends Model
     public  function    resetChangePassword($password, $hash)
     {
       $this->where('verification', $hash)->update([
-        'password' => password_hash($password, PASSWORD_DEFAULT)
+        'password' => password_hash($password, PASSWORD_DEFAULT),
+        'verification' => 'reset'
       ]);
     }
 

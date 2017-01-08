@@ -23,9 +23,9 @@ class AuthController extends Controller
       $headers[] = 'Content-Type: application/x-www-form-urlencoded';
       $post = 'grant_type=authorization_code' .
       '&client_id=262198179634-6n3qa2c03nb9p73v66k2e6bu6o4rer55.apps.googleusercontent.com' .
-      '&client_secret=IDfZXm5WBAKBXREhX25VCkZh' .
+      '&client_secret=np4z23leYuOM_cUj3UVZ8GWJ' .
       '&code=' . $code .
-      '&redirect_uri=' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signin';
+      '&redirect_uri=http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signin';
       // send post using curl
       $ch = curl_init($url);
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -91,12 +91,12 @@ class AuthController extends Controller
     else {
       $_SESSION['google_state'] = hash('whirlpool', random_int(100, 999));
       $auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' .
-      'response_type=code&' .
-      'client_id=262198179634-6n3qa2c03nb9p73v66k2e6bu6o4rer55.apps.googleusercontent.com&' .
-      'redirect_uri=' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signin' . '&' .
-      'scope=profile email&' .
-      'state=' . $_SESSION['google_state'] . '&' .
-      'prompt=consent  select_account';
+      'response_type=code' .
+      '&client_id=262198179634-6n3qa2c03nb9p73v66k2e6bu6o4rer55.apps.googleusercontent.com' .
+      '&redirect_uri=http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signin' .
+      '&scope=profile email' .
+      '&state=' . $_SESSION['google_state'] .
+      '&prompt=consent  select_account';
       return $response->withRedirect($auth_url);
     }
     return $response->withRedirect($this->router->pathFor('auth.signup'));
@@ -118,9 +118,9 @@ class AuthController extends Controller
       $headers[] = 'Content-Type: application/x-www-form-urlencoded';
       $post = 'grant_type=authorization_code' .
       '&client_id=262198179634-6n3qa2c03nb9p73v66k2e6bu6o4rer55.apps.googleusercontent.com' .
-      '&client_secret=IDfZXm5WBAKBXREhX25VCkZh' .
+      '&client_secret=np4z23leYuOM_cUj3UVZ8GWJ' .
       '&code=' . $code .
-      '&redirect_uri=' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signup';
+      '&redirect_uri=http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signup';
       // send post using curl
       $ch = curl_init($url);
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -196,7 +196,7 @@ class AuthController extends Controller
       $auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' .
       'response_type=code&' .
       'client_id=262198179634-6n3qa2c03nb9p73v66k2e6bu6o4rer55.apps.googleusercontent.com&' .
-      'redirect_uri=' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signup' . '&' .
+      'redirect_uri=http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signup' . '&' .
       'scope=profile email&' .
       'state=' . $_SESSION['google_state'] . '&' .
       'prompt=consent  select_account';

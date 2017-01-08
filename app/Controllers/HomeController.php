@@ -88,7 +88,10 @@ class HomeController extends Controller
         $_SESSION['order-by'] = $request->getParam('order-by');
       // affect new movie list now
       if (!empty($request->getParam('search')))
+      {
+        $_SESSION['sort-by'] = 'title';
         $_SESSION['movies'] = $this->getSearchMovies($request);
+      }
       else
         $_SESSION['movies'] = $this->getDefaultMovies();
       if (isset($_SESSION['user']))
