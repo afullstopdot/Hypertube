@@ -292,8 +292,8 @@ class AuthController extends Controller
 
         $url = 'https://api.intra.42.fr/oauth/token';
         $post = 'grant_type=authorization_code' .
-        '&client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
-        '&client_secret=81ace918b83a8e304ddbd65083a4f5d68ce798c80f83551bc0850bdf58b90721' .
+        '&client_id=f61c234bbbd93e4f786fac9e7c501b67eded625c7c0d9e561b16280248242f60' .
+        '&client_secret=11faa66099c7522fd08f90667b45bd1aafd34cb985ab6a1764c13c4e61d8e17b' .
         '&code=' . $code .
         '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signin' .
         '&state=' . $_SESSION['state'];
@@ -403,7 +403,7 @@ class AuthController extends Controller
 
       $_SESSION['state'] = hash('whirlpool', random_int(100, 999));
       $auth_url = 'https://api.intra.42.fr/oauth/authorize?' .
-      'client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
+      'client_id=f61c234bbbd93e4f786fac9e7c501b67eded625c7c0d9e561b16280248242f60' .
       '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signin' .
       '&response_type=code&scope=public' .
       '&state=' . $_SESSION['state'];
@@ -442,8 +442,8 @@ class AuthController extends Controller
 
         $url = 'https://api.intra.42.fr/oauth/token';
         $post = 'grant_type=authorization_code' .
-        '&client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
-        '&client_secret=81ace918b83a8e304ddbd65083a4f5d68ce798c80f83551bc0850bdf58b90721' .
+        '&client_id=f61c234bbbd93e4f786fac9e7c501b67eded625c7c0d9e561b16280248242f60' .
+        '&client_secret=11faa66099c7522fd08f90667b45bd1aafd34cb985ab6a1764c13c4e61d8e17b' .
         '&code=' . $code .
         '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signup' .
         '&state=' . $_SESSION['state'];
@@ -546,7 +546,7 @@ class AuthController extends Controller
 
       $_SESSION['state'] = hash('whirlpool', random_int(100, 999));
       $auth_url = 'https://api.intra.42.fr/oauth/authorize?' .
-      'client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
+      'client_id=f61c234bbbd93e4f786fac9e7c501b67eded625c7c0d9e561b16280248242f60' .
       '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signup' .
       '&response_type=code&scope=public' .
       '&state=' . $_SESSION['state'];
