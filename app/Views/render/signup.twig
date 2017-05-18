@@ -4,57 +4,73 @@
 
 <div class="container">
     <div class="page-header text-center">
-      <p>Use a vaild e-mail, and verify account.</p>
+      <h1>Use a vaild e-mail, and verify account.</h1>
     </div>
     <div class="row">
       <div class".col-md-6 col-md-offset-3">
-        <div class="panel panel-default">
-          <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Sign up</div>
-            <div class="panel-body">
-              <form action="{{ path_for('auth.signup') }}" method="post" autocomplete="off">
-                <div class="form-group{{ errors.email ? ' has-error' : ''}}">
-                  <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-                  <input type="email" name="email" id="email" placeholder="you@domain.com" class="form-control" value="{{ old.email }}">
-                  {% if errors.email %}
-                    <span class="help-block">{{ errors.email | first }}</span>
-                  {% endif %}
-                </div>
-                <div class="form-group{{ errors.name ? ' has-error' : ''}}">
-                  <label for="name"><span class="glyphicon glyphicon-sunglasses"></span> Username</label>
-                  <input type="text" name="name" id="name" class="form-control" value="{{ old.name }}">
-                  {% if errors.name %}
-                    <span class="help-block">{{ errors.name | first }}</span>
-                  {% endif %}
-                </div>
-                <div class="form-group{{ errors.firstname ? ' has-error' : ''}}">
-                  <label for="firstname">Name</label>
-                  <input type="text" name="firstname" id="firstname" class="form-control" value="{{ old.firstname }}">
-                  {% if errors.firstname %}
-                    <span class="help-block">{{ errors.firstname | first }}</span>
-                  {% endif %}
-                </div>
-                <div class="form-group{{ errors.lastname ? ' has-error' : ''}}">
-                  <label for="lastname">Surname</label>
-                  <input type="text" name="lastname" id="lastname" class="form-control" value="{{ old.lastname }}">
-                  {% if errors.lastname %}
-                    <span class="help-block">{{ errors.lastname | first }}</span>
-                  {% endif %}
-                </div>
-                <div class="form-group{{ errors.password ? ' has-error' : ''}}">
-                  <label for="password"><span class="glyphicon glyphicon-lock"></span> Password</label>
-                  <input type="password" name="password" id="password" class="form-control">
-                  {% if errors.password %}
-                    <span class="help-block">{{ errors.password | first }}</span>
-                  {% endif %}
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-                {{ csrf.field | raw }}
-              </form>
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Sign up</div>
+              <div class="panel-body">
+                <form action="{{ path_for('auth.signup') }}" method="post" autocomplete="off">
+                  <div class="col-sm-6">
+                    <div class="form-group{{ errors.email ? ' has-error' : ''}}">
+                      <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                      <input type="email" name="email" id="email" placeholder="you@domain.com" class="form-control" value="{{ old.email }}">
+                      {% if errors.email %}
+                        <span class="help-block">{{ errors.email | first }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group{{ errors.name ? ' has-error' : ''}}">
+                      <label for="name"><span class="glyphicon glyphicon-sunglasses"></span> Username</label>
+                      <input type="text" name="name" id="name" class="form-control" value="{{ old.name }}">
+                      {% if errors.name %}
+                        <span class="help-block">{{ errors.name | first }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group{{ errors.firstname ? ' has-error' : ''}}">
+                      <label for="firstname">Name</label>
+                      <input type="text" name="firstname" id="firstname" class="form-control" value="{{ old.firstname }}">
+                      {% if errors.firstname %}
+                        <span class="help-block">{{ errors.firstname | first }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group{{ errors.lastname ? ' has-error' : ''}}">
+                      <label for="lastname">Surname</label>
+                      <input type="text" name="lastname" id="lastname" class="form-control" value="{{ old.lastname }}">
+                      {% if errors.lastname %}
+                        <span class="help-block">{{ errors.lastname | first }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group{{ errors.password ? ' has-error' : ''}}">
+                      <label for="password"><span class="glyphicon glyphicon-lock"></span> Password</label>
+                      <input type="password" name="password" id="password" class="form-control">
+                      {% if errors.password %}
+                        <span class="help-block">{{ errors.password | first }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-default">Submit</button>
+                  {{ csrf.field | raw }}
+                </form>
+              </div>
             </div>
           </div>
         </div>
-        <a href="{{ path_for('oauth.google.signup') }}" title="Google+" class="btn btn-lg"><i class="fa fa-google-plus fa-fw"></i></a>
-        <a href="{{ path_for('oauth.42.signup') }}" title="42" class="btn btn-lg">42</a>
+        <div class="col-sm-6">
+          <a href="{{ path_for('oauth.google.signup') }}" title="Google+" class="btn btn-lg" style="background-color: #dd4b39;"><i class="fa fa-google-plus fa-fw"></i></a>
+        </div>
+        <div class="col-sm-6">
+          <a href="{{ path_for('oauth.42.signup') }}" title="42" class="btn btn-lg">42</a>
+        </div>
       </div>
     </div>
 </div>

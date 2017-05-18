@@ -11,12 +11,20 @@ class AuthController extends Controller
   {
     $code = $request->getParam('code');
     $scope = $request->getParam('scope');
-    // google passes error after redirect if credentials failed.
+    
+    /*
+    ** google passes error after redirect if credentials failed.
+    */
+
     if (!empty($request->getParam('scope'))) {
       $this->flash->addMessage('error', 'Error comunicating with Google.');
       return $response->withRedirect($this->router->pathFor('auth.signin'));
     }
-    // recieved auth code, exchange for auth_token
+
+    /*
+    ** recieved auth code, exchange for auth_token
+    */
+
     if (isset($code)) {
       $url = 'https://www.googleapis.com/oauth2/v4/token';
       $headers = array();
@@ -26,7 +34,11 @@ class AuthController extends Controller
       '&client_secret=np4z23leYuOM_cUj3UVZ8GWJ' .
       '&code=' . $code .
       '&redirect_uri=http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signin';
-      // send post using curl
+      
+      /*
+      ** send post using curl
+      */
+
       $ch = curl_init($url);
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
       curl_setopt($ch, CURLOPT_POST, 1);
@@ -40,7 +52,11 @@ class AuthController extends Controller
       curl_close($ch);
       unset($_SESSION['google_state']);
       $api_response = json_decode($api_response, true);
-      // if api_response is set, google replied with a access token.
+      
+      /*
+      ** if api_response is set, google replied with a access token.
+      */
+
       if (isset($api_response) && !empty($api_response)) {
         $_SESSION['google_access_token'] = $api_response['access_token'];
         return $response->withRedirect($this->router->pathFor('oauth.google.signin'));
@@ -51,9 +67,16 @@ class AuthController extends Controller
       return $response->withRedirect($this->router->pathFor('auth.signin'));
     }
 
-    // check if session variable is set, if not. pass the users to googles oauth to get a token.
+    /*
+    **  check if session variable is set, if not. pass the users to googles oauth to get a token.
+    */
+
     if (isset($_SESSION['google_access_token']) && $_SESSION['google_access_token']) {
-      // use token to make api requests, retrieve info && create account.
+      
+      /*
+      ** use token to make api requests, retrieve info && create account.
+      */
+
       $url = 'https://www.googleapis.com/plus/v1/people/me';
       $authorization = 'Authorization: Bearer ' . $_SESSION['google_access_token'];
       $ch = curl_init($url);
@@ -70,7 +93,11 @@ class AuthController extends Controller
       unset($_SESSION['google_access_token']);
 
       if (isset($api_response)) {
-        // authenticate user
+        
+        /*
+        ** authenticate user
+        */
+
         $auth = $this->auth->oauth_attempt(
           $api_response['emails'][0]['value']
         );
@@ -106,12 +133,20 @@ class AuthController extends Controller
   {
     $code = $request->getParam('code');
     $scope = $request->getParam('scope');
-    // google passes error after redirect if credentials failed.
+    
+    /*
+    ** google passes error after redirect if credentials failed.
+    */
+
     if (!empty($request->getParam('scope'))) {
       $this->flash->addMessage('error', 'Error comunicating with Google.');
       return $response->withRedirect($this->router->pathFor('auth.signup'));
     }
-    // recieved auth code, exchange for auth_token
+    
+    /*
+    ** recieved auth code, exchange for auth_token
+    */
+
     if (isset($code)) {
       $url = 'https://www.googleapis.com/oauth2/v4/token';
       $headers = array();
@@ -121,7 +156,11 @@ class AuthController extends Controller
       '&client_secret=np4z23leYuOM_cUj3UVZ8GWJ' .
       '&code=' . $code .
       '&redirect_uri=http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/google/signup';
-      // send post using curl
+      
+      /*
+      ** send post using curl
+      */
+
       $ch = curl_init($url);
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
       curl_setopt($ch, CURLOPT_POST, 1);
@@ -135,7 +174,11 @@ class AuthController extends Controller
       curl_close($ch);
       unset($_SESSION['google_state']);
       $api_response = json_decode($api_response, true);
-      // if api_response is set, google replied with a access token.
+      
+      /*
+      ** if api_response is set, google replied with a access token.
+      */
+
       if (isset($api_response) && !empty($api_response)) {
         $_SESSION['google_access_token'] = $api_response['access_token'];
         return $response->withRedirect($this->router->pathFor('oauth.google.signup'));
@@ -146,9 +189,16 @@ class AuthController extends Controller
       return $response->withRedirect($this->router->pathFor('auth.signup'));
     }
 
-    // check if session variable is set, if not. pass the users to googles oauth to get a token.
+    /*
+    ** check if session variable is set, if not. pass the users to googles oauth to get a token.
+    */
+
     if (isset($_SESSION['google_access_token']) && $_SESSION['google_access_token']) {
-      // use token to make api requests, retrieve info && create account.
+      
+      /* 
+      ** use token to make api requests, retrieve info && create account.
+      */
+
       $url = 'https://www.googleapis.com/plus/v1/people/me';
       $authorization = 'Authorization: Bearer ' . $_SESSION['google_access_token'];
       $ch = curl_init($url);
@@ -163,11 +213,19 @@ class AuthController extends Controller
 
       $api_response = json_decode($api_response, true);
       if (isset($api_response)) {
-        // use the info retrieved, create account in db if one doesnt exists already.
+        
+        /*
+        ** use the info retrieved, create account in db if one doesnt exists already.
+        */
+
         $UserList = $this->container->profile->getUser($api_response['name']['givenName'] . '-' . $api_response['id']);
         $UserList2 = $this->container->profile->getUserByEmail($api_response['emails'][0]['value']);
         if (empty($UserList) && empty($UserList2)) {
-          // i do no error checking, i just enter names in the db.
+          
+          /*
+          ** i do no error checking, i just enter names in the db.
+          */
+
           $user = User::create([
             'name' => $api_response['name']['givenName'] . '-' . $api_response['id'],
             'email' => $api_response['emails'][0]['value'],
@@ -176,7 +234,11 @@ class AuthController extends Controller
             'password' => 'N/A',
             'profilePicture' => 'joker-profile.png',
           ]);
-          // the account is registered, i plan to make no api requests.
+          
+          /*
+          ** the account is registered, i plan to make no api requests.
+          */
+
           $this->flash->addMessage('info', 'Google+ account created.');
           unset($_SESSION['google_access_token']);
         }
@@ -207,15 +269,27 @@ class AuthController extends Controller
 
   public function getOauth42SignIn($request, $response)
   {
-    // cant check results of functions if set
+
+    /*
+    ** cant check results of functions if set
+    */
+
     $code = $request->getParam('code');
     $state = $request->getParam('state');
     if (isset($code) && isset($state))
     {
-      // api request worked, check state then send post to 42 for auth code.
+
+      /*
+      ** api request worked, check state then send post to 42 for auth code.
+      */
+
       if ($state === $_SESSION['state'])
       {
-        // use token from code for auth_token
+
+        /*
+        ** use token from code for auth_token
+        */
+
         $url = 'https://api.intra.42.fr/oauth/token';
         $post = 'grant_type=authorization_code' .
         '&client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
@@ -223,7 +297,11 @@ class AuthController extends Controller
         '&code=' . $code .
         '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signin' .
         '&state=' . $_SESSION['state'];
-        // send post using curl
+        
+        /*
+        ** send post using curl
+        */
+
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
@@ -242,17 +320,28 @@ class AuthController extends Controller
       }
       else
       {
-        // the state is wrong means someone is trying to access illegally.
+
+        /*
+        ** the state is wrong means someone is trying to access illegally.
+        */
+
         echo 'CSF caught, fuck off.';
         die();
       }
       return $response->withRedirect($this->router->pathFor('oauth.42.signin'));
     }
 
-    // use access token
+    /*
+    ** use access token
+    */
+
     if (isset($_SESSION['42_access_token']) && $_SESSION['42_access_token'])
     {
-      // 42 API responded with a token, so now get info bout user and register in db
+
+      /*
+      ** 42 API responded with a token, so now get info bout user and register in db
+      */
+
       $url = 'https://api.intra.42.fr/v2/me';
       $authorization = 'Authorization: Bearer ' . $_SESSION['42_access_token'];
       $ch = curl_init( $url );
@@ -272,7 +361,11 @@ class AuthController extends Controller
 
       }
       else {
-        // retrieved info successfully, check if account exists.
+        
+        /*
+        ** retrieved info successfully, check if account exists.
+        */
+
         unset ($_SESSION['42_access_token']);
         if (isset($api_response)) {
 
@@ -293,21 +386,32 @@ class AuthController extends Controller
           $this->flash->addMessage('info', '42 didnt accept the API.');
           return $response->withRedirect($this->router->pathFor('auth.signin'));
         }
-        // end session since this is registration, 42 tokens expire quick - 2hr -  anyway.
+        
+        /*
+        ** end session since this is registration, 42 tokens expire quick - 2hr -  anyway.
+        */
       }
       return $response->withRedirect($this->router->pathFor('home'));
     }
     else
     {
-      // if we have no access token we need to create one, per 42 endpoin requirements.
-      // send the api request to 42, wi;; return GET code and state, state must match session otherwise csf
+
+      /*
+      ** if we have no access token we need to create one, per 42 endpoin requirements.
+      ** send the api request to 42, wi;; return GET code and state, state must match session otherwise csf
+      */
+
       $_SESSION['state'] = hash('whirlpool', random_int(100, 999));
       $auth_url = 'https://api.intra.42.fr/oauth/authorize?' .
       'client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
       '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signin' .
       '&response_type=code&scope=public' .
       '&state=' . $_SESSION['state'];
-      // redirect the users to 42 oauth, it will redirect them back here.
+      
+      /*
+      ** redirect the users to 42 oauth, it will redirect them back here.
+      */
+
       return $response->withRedirect($auth_url);
     }
     return $response->withRedirect($this->router->pathFor('auth.signup'));
@@ -315,15 +419,27 @@ class AuthController extends Controller
 
   public function getOauth42SignUp($request, $response)
   {
-    // cant check results of functions if set
+
+    /*
+    ** cant check results of functions if set
+    */
+
     $code = $request->getParam('code');
     $state = $request->getParam('state');
     if (isset($code) && isset($state))
     {
-      // api request worked, check state then send post to 42 for auth code.
+
+      /*
+      ** api request worked, check state then send post to 42 for auth code.
+      */
+
       if ($state === $_SESSION['state'])
       {
-        // use token from code for auth_token
+
+        /*
+        ** use token from code for auth_token
+        */
+
         $url = 'https://api.intra.42.fr/oauth/token';
         $post = 'grant_type=authorization_code' .
         '&client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
@@ -341,7 +457,11 @@ class AuthController extends Controller
         $api_response = curl_exec( $ch );
         curl_close($ch);
         $api_response = json_decode($api_response, true);
-        // error, try again.
+        
+        /*
+        ** error, try again.
+        */
+
         if (isset($api_response['error'])) {
           $this->flash->addMessage('info', 'oauth failed, check client id etc.');
           return $response->withRedirect($this->router->pathFor('oauth.signup'));
@@ -352,10 +472,17 @@ class AuthController extends Controller
       return $response->withRedirect($this->router->pathFor('oauth.42.signup'));
     }
 
-    // use access token
+    /*
+    ** use access token
+    */
+
     if (isset($_SESSION['42_access_token']) && $_SESSION['42_access_token'])
     {
-      // 42 API responded with a token, so now get info bout user and register in db
+
+      /*
+      ** 42 API responded with a token, so now get info bout user and register in db
+      */
+
       $url = 'https://api.intra.42.fr/v2/me';
       $authorization = 'Authorization: Bearer ' . $_SESSION['42_access_token'];
       $ch = curl_init( $url );
@@ -372,7 +499,11 @@ class AuthController extends Controller
         return $response->withRedirect($this->router->pathFor('auth.signup'));
       }
       else {
-        // retrieved info successfully, check if account exists.
+        
+        /*
+        ** retrieved info successfully, check if account exists.
+        */
+
         if (isset($api_response)) {
 
           $UserList = $this->container->profile->getUser($api_response['login']);
@@ -397,22 +528,33 @@ class AuthController extends Controller
           }
 
         }
-        // end session since this is registration, 42 tokens expire quick - 2hr -  anyway.
+        
+        /*
+        ** end session since this is registration, 42 tokens expire quick - 2hr -  anyway.
+        */
       }
       unset($_SESSION['42_access_token']);
       return $response->withRedirect($this->router->pathFor('home'));
     }
     else
     {
-      // if we have no access token we need to create one, per 42 endpoin requirements.
-      // send the api request to 42, wi;; return GET code and state, state must match session otherwise csf
+      
+      /*
+      ** if we have no access token we need to create one, per 42 endpoin requirements.
+      ** send the api request to 42, wi;; return GET code and state, state must match session otherwise csf
+      */
+
       $_SESSION['state'] = hash('whirlpool', random_int(100, 999));
       $auth_url = 'https://api.intra.42.fr/oauth/authorize?' .
       'client_id=9697f9df46513461e6ea0d6966e1298ded21bb4d58b3379d053d4cbff1e696f8' .
       '&redirect_uri=' . 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/hypertube/home/oauth/42/signup' .
       '&response_type=code&scope=public' .
       '&state=' . $_SESSION['state'];
-      // redirect the users to 42 oauth, it will redirect them back here.
+      
+      /*
+      ** redirect the users to 42 oauth, it will redirect them back here.
+      */
+
       return $response->withRedirect($auth_url);
     }
     return $response->withRedirect($this->router->pathFor('auth.signup'));
@@ -431,7 +573,11 @@ class AuthController extends Controller
 
   public function postSignIn($request, $response)
   {
-    // users can log in with email or username
+    
+    /*
+    ** users can log in with email or username
+    */
+    
     if (!empty($request->getParam('auth')))
     {
       $var = strstr($request->getParam('auth'), '@', true);
@@ -511,6 +657,6 @@ class AuthController extends Controller
     ]);
 
     $this->flash->addMessage('info', 'You have signed up.');
-    return $response->withRedirect($this->router->pathFor('home'));
+    return $response->withRedirect($this->router->pathFor('auth.signin'));
   }
 }

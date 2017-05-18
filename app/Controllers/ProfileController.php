@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-// use App\Auth\Auth;
+
 use App\Models\User;
 use \Slim\Views\Twig as View;
 use Respect\Validation\Validator as v;
@@ -21,7 +21,11 @@ class ProfileController extends Controller
       $this->flash->addMessage('error', 'check settings, input failed validation.');
       return $response->withRedirect($this->router->pathFor('home.profile'));
     }
-    // input validated, now we check so dont updated fields to the same value.s
+    
+    /*
+    ** input validated, now we check so dont updated fields to the same value.s
+    */
+    
     if ($this->auth->user()->getProfileEmail($this->auth->user()) !== ($request->getParam('email'))) {
       $this->auth->user()->setProfileEmail($request->getParam('email'));
     }

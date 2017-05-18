@@ -1,76 +1,87 @@
-<div class="container text-center">
-  <br><br><a href="#search-sort" data-toggle="collapse"><span class="glyphicon glyphicon-sort"> Search Library <span class="glyphicon glyphicon-filter"></a><br><br>
+<div class="container text-center" style="margin-top: 20px;background: rgb(34, 34, 34); margin-bottom: 20px;">
+  <br><a href="#search-sort" data-toggle="collapse">
+    <span class="glyphicon glyphicon-sort"> SEARCH LIBRARY <span class="glyphicon glyphicon-filter"></a><br><br>
 </div>
 <div id="search-sort" class="collapse">
 <form action="{{ path_for('home') }}" method="GET" autocomplete="off">
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 col-sm-offset-3">
+      <div class="col-sm-12" style="background: rgba(5, 120, 120, 0.48);margin-top: 0px;padding-top: 10px;padding-bottom: 15px;margin-bottom: 20px;">
         <div id="imaginary_container">
-            <div class="input-group stylish-input-group">
-              <input type="text" name="search" class="form-control"  placeholder="Search" >
-              <span class="input-group-addon"><button type="submit"><span class="glyphicon glyphicon-search"></span></button></span>
+            <div class="col-sm-12">
+              <div class="input-group stylish-input-group">
+                <input type="text" name="search" class="form-control"  placeholder="Search" >
+                <span class="input-group-addon"><button type="submit"><span class="glyphicon glyphicon-search"></span></button></span>
+              </div>
             </div>
             <div class="form-group">
-              <label for="sort-by">Sort by:</label>
-              <select name="sort-by" class="form-control" id="sort-by">
-                <option>year</option>
-                <option>title</option>
-                <option>rating</option>
-                <option>peers</option>
-                <option>seeds</option>
-                <option>download_count</option>
-                <option>like_count</option>
-                <option>date_added</option>
-              </select>
-              <label for="imdb-sort">imDb:</label>
-              <select name="imdb" class="form-control" id="imdb-sort">
-                <option>all</option>
-                <option>9</option>
-                <option>8</option>
-                <option>7</option>
-                <option>6</option>
-                <option>5</option>
-                <option>4</option>
-                <option>3</option>
-                <option>2</option>
-                <option>1</option>
-              </select>
-              <label for="genre-sort">genre:</label>
-              <select name="genre" class="form-control" id="genre-sort">
-                <option>all</option>
-                <option>Action</option>
-                <option>Adventure</option>
-                <option>Animation</option>
-                <option>Biography</option>
-                <option>Comedy</option>
-                <option>Crime</option>
-                <option>Documentary</option>
-                <option>Drama</option>
-                <option>Famliy</option>
-                <option>Fantasy</option>
-                <option>Film-Noir</option>
-                <option>Game-Show</option>
-                <option>History</option>
-                <option>Horror</option>
-                <option>Music</option>
-                <option>Musical</option>
-                <option>Mystery</option>
-                <option>News</option>
-                <option>Reality-TV</option>
-                <option>Romance</option>
-                <option>Sci-Fi</option>
-                <option>Sport</option>
-                <option>Talk-Show</option>
-                <option>Thriller</option>
-                <option>War</option>
-                <option>Western</option>
-              </select>
-              <label for="Order by">Order by</label>
-              <select name="order-by" class="form-control" id="order-by">
-                <option>asc</option>
-                <option>desc</option>
-              </select>
+              <div class="col-sm-3">
+                <label for="sort-by" style="color: #f2f2f2;">Sort by</label>
+                <select name="sort-by" class="form-control" id="sort-by">
+                  <option>year</option>
+                  <option>title</option>
+                  <option>rating</option>
+                  <option>peers</option>
+                  <option>seeds</option>
+                  <option>download_count</option>
+                  <option>like_count</option>
+                  <option>date_added</option>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <label for="imdb-sort" style="color: #f2f2f2;">imDb</label>
+                <select name="imdb" class="form-control" id="imdb-sort">
+                  <option>all</option>
+                  <option>9</option>
+                  <option>8</option>
+                  <option>7</option>
+                  <option>6</option>
+                  <option>5</option>
+                  <option>4</option>
+                  <option>3</option>
+                  <option>2</option>
+                  <option>1</option>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <label for="genre-sort" style="color: #f2f2f2;">Genre</label>
+                <select name="genre" class="form-control" id="genre-sort">
+                  <option>all</option>
+                  <option>Action</option>
+                  <option>Adventure</option>
+                  <option>Animation</option>
+                  <option>Biography</option>
+                  <option>Comedy</option>
+                  <option>Crime</option>
+                  <option>Documentary</option>
+                  <option>Drama</option>
+                  <option>Famliy</option>
+                  <option>Fantasy</option>
+                  <option>Film-Noir</option>
+                  <option>Game-Show</option>
+                  <option>History</option>
+                  <option>Horror</option>
+                  <option>Music</option>
+                  <option>Musical</option>
+                  <option>Mystery</option>
+                  <option>News</option>
+                  <option>Reality-TV</option>
+                  <option>Romance</option>
+                  <option>Sci-Fi</option>
+                  <option>Sport</option>
+                  <option>Talk-Show</option>
+                  <option>Thriller</option>
+                  <option>War</option>
+                  <option>Western</option>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <label for="Order by" style="color: #f2f2f2;">Order by</label>
+                <select name="order-by" class="form-control" id="order-by">
+                  <option>asc</option>
+                  <option>desc</option>
+                </select>
+              </div>
             </div>
         </div>
       </div>

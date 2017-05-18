@@ -31,10 +31,17 @@ class StreamController extends Controller
       }
   }
 
-  //theoretically, download the movie add to db move to folder
+  /*
+  ** theoretically, download the movie add to db move to folder
+  */
+
   function downloadMovie($movie_id)
   {
-    // download torrent lol, testing purposes The Dark Knight
+    
+    /*
+    ** download torrent lol, testing purposes The Dark Knight
+    */
+    
     if ($movie_id == '3175' || $movie_id == '6264')
     {
       $this->container->downloads->addDownloadedMovie(
